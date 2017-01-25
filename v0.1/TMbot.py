@@ -46,13 +46,10 @@ driver.find_element_by_xpath(first_stream_xpath).click()
 time.sleep(5)
 
 
-# ____ Вытягиваем значение фолловеров ____
+# ____ Вытягиваем кол-во просмотров у стримера ____
 
-# Парсим текущую страницу
-# dirty_link = urllib.request.urlopen(driver.current_url).read()
-# soup = BeautifulSoup(dirty_link, "lxml")
-# print(soup)
-
-# watches_xpath = "/html/body/div[@class='wrapper']/div[@class='container']/div[@class='stream']/div[@class='stream-footer']/div[@class='f-left']/span[@class='icon views']"
-# print(driver.find_element_by_xpath(watches_xpath).get_attribute("title"))
+# Xpath для просмотров
+watches_xpath = "/html/body/div[@class='wrapper']/div[@class='container']/div[@class='stream']/div[@class='stream-footer']/div[@class='f-left']/span[@class='icon views']"
+# Получаем видимый текст =)
+print(driver.find_element_by_xpath(watches_xpath).text)
 
