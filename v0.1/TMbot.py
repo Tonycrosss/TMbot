@@ -34,3 +34,17 @@ enter_xbutton = "/html/body/div[@id='popup-window']/div[@class='inner']/form/div
 driver.find_element_by_xpath(enter_xbutton).click()
 
 time.sleep(5)
+
+
+# ___ Открываем первый стрим ____
+
+# Xpath для первого стрима
+first_stream_xpath = "/html/body/div[@class='wrapper']/div[@class='container'][2]/div[@class='content-left']/div[@class='block'][1]/div[@class='streams-list']/div[@class='item vip super-vip']/div[@class='inner']/div[@class='status']/a"
+# Переходим на первый стрим
+driver.find_element_by_xpath(first_stream_xpath).click()
+time.sleep(5)
+
+
+# ____ Вытягиваем значение фолловеров ____
+# watches_xpath = "/html/body/div[@class='wrapper']/div[@class='container']/div[@class='stream']/div[@class='stream-footer']/div[@class='f-left']/span[@class='icon views']"
+# print(driver.find_element_by_xpath(watches_xpath).get_attribute("title"))
