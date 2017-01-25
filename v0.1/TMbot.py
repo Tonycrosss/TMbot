@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 from bs4 import BeautifulSoup
+import urllib.request
 
 username = input("Введи логин\n")
 mypasswd = input("Введи пароль\n")
@@ -46,5 +47,12 @@ time.sleep(5)
 
 
 # ____ Вытягиваем значение фолловеров ____
+
+# Парсим текущую страницу
+# dirty_link = urllib.request.urlopen(driver.current_url).read()
+# soup = BeautifulSoup(dirty_link, "lxml")
+# print(soup)
+
 # watches_xpath = "/html/body/div[@class='wrapper']/div[@class='container']/div[@class='stream']/div[@class='stream-footer']/div[@class='f-left']/span[@class='icon views']"
 # print(driver.find_element_by_xpath(watches_xpath).get_attribute("title"))
+
