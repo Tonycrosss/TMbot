@@ -1,9 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
-from bs4 import BeautifulSoup
-import urllib.request
-import os
+import subprocess, sys
 
 username = input("Введи логин\n")
 mypasswd = input("Введи пароль\n")
@@ -56,4 +54,7 @@ time.sleep(65)
 new_money = driver.find_element_by_xpath(money_xpath).text
 if new_money <= current_money:
     driver.close()
-    os.startfile('TMbot.py')
+    subprocess.call(['python3.5', '/mnt/3EA24E96A24E5297/Python/TMbot/v0.2/TMbot.py'])
+
+
+# TODO Отсутствие элемента чтоб преезапускало скрипт
