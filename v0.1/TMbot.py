@@ -36,7 +36,6 @@ driver.find_element_by_xpath(enter_xbutton).click()
 
 time.sleep(5)
 
-
 # ___ Открываем первый стрим ____
 
 # Xpath для первого стрима
@@ -45,11 +44,14 @@ first_stream_xpath = "/html/body/div[@class='wrapper']/div[@class='container'][2
 driver.find_element_by_xpath(first_stream_xpath).click()
 time.sleep(5)
 
-
 # ____ Вытягиваем кол-во просмотров у стримера ____
 
-# Xpath для просмотров
-watches_xpath = "/html/body/div[@class='wrapper']/div[@class='container']/div[@class='stream']/div[@class='stream-footer']/div[@class='f-left']/span[@class='icon views']"
+# Xpath для баблишка
+money_xpath = "/html/body/div[@class='wrapper']/div[@class='container']/div[@class='content-left']/div[@class='block'][2]/div[@class='time-is-money']/div[@class='money f-right']/div[@class='center bc-cont']/div[@id='credits-earned']"
 # Получаем видимый текст =)
-print(driver.find_element_by_xpath(watches_xpath).text)
-
+print(driver.find_element_by_xpath(money_xpath).text)
+current_money = driver.find_element_by_xpath(money_xpath).text
+time.sleep(65)
+new_money = driver.find_element_by_xpath(money_xpath).text
+if new_money <= current_money:
+    pass
