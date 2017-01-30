@@ -6,7 +6,10 @@ import subprocess, sys
 username = input("Введи логин\n")
 mypasswd = input("Введи пароль\n")
 
-driver = webdriver.Chrome()
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument("--mute-audio")
+driver = webdriver.Chrome(chrome_options=chrome_options)
+
 driver.get('http://twitchmaster.ru/')  # Коннектимся
 time.sleep(4)
 
@@ -49,12 +52,16 @@ time.sleep(5)
 money_xpath = "/html/body/div[@class='wrapper']/div[@class='container']/div[@class='content-left']/div[@class='block'][2]/div[@class='time-is-money']/div[@class='money f-right']/div[@class='center bc-cont']/div[@id='credits-earned']"
 # Получаем видимый текст =)
 print(driver.find_element_by_xpath(money_xpath).text)
-current_money = driver.find_element_by_xpath(money_xpath).text
-time.sleep(65)
-new_money = driver.find_element_by_xpath(money_xpath).text
-if new_money <= current_money:
-    driver.close()
-    subprocess.call(['python3.5', '/mnt/3EA24E96A24E5297/Python/TMbot/v0.2/TMbot.py'])
+def moneychecker():
+    current_money = driver.find_element_by_xpath(money_xpath).text
+    time.sleep(65)
+    new_money = driver.find_element_by_xpath(money_xpath).text
+    if new_money <= current_money:
+        driver.close()
+        subprocess.call(['python3.5', '/mnt/3EA24E96A24E5297/Python/TMbot/v0.2/TMbot.py'])
+    else:
+        moneychecker()
+moneychecker()
 
 
 # TODO Отсутствие элемента чтоб преезапускало скрипт
