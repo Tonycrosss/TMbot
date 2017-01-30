@@ -54,4 +54,4 @@ current_money = driver.find_element_by_xpath(money_xpath).text
 time.sleep(65)
 new_money = driver.find_element_by_xpath(money_xpath).text
 if new_money <= current_money:
-    pass
+    driver.close()
