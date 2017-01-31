@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import subprocess, sys
+from selenium import common
 
 username = input("Введи логин\n")
 mypasswd = input("Введи пароль\n")
@@ -42,8 +43,13 @@ time.sleep(5)
 
 # Xpath для первого стрима
 first_stream_xpath = "/html/body/div[@class='wrapper']/div[@class='container'][2]/div[@class='content-left']/div[@class='block'][1]/div[@class='streams-list']/div[@class='item vip super-vip']/div[@class='inner']/div[@class='status']/a"
+if_no_promo_first_stream_xpath = "/html/body/div[@class='wrapper']/div[@class='container'][2]/div[@class='content-left']/div[@class='block'][1]/div[@class='streams-list']/div[@class='item vip '][1]/div[@class='inner']/div[@class='status']/a"
 # Переходим на первый стрим
-driver.find_element_by_xpath(first_stream_xpath).click()
+try:
+    driver.find_element_by_xpath(first_stream_xpath).click()
+except common.exceptions.WebDriverException:
+    print("Нету промо канала, перехожу на запаску!")
+    driver.find_element_by_xpath(if_no_promo_first_stream_xpath).click()
 time.sleep(5)
 
 # ____ Вытягиваем кол-во просмотров у стримера ____
@@ -51,11 +57,22 @@ time.sleep(5)
 # Xpath для баблишка
 money_xpath = "/html/body/div[@class='wrapper']/div[@class='container']/div[@class='content-left']/div[@class='block'][2]/div[@class='time-is-money']/div[@class='money f-right']/div[@class='center bc-cont']/div[@id='credits-earned']"
 # Получаем видимый текст =)
-print(driver.find_element_by_xpath(money_xpath).text)
+summary_money = []
 def moneychecker():
-    current_money = driver.find_element_by_xpath(money_xpath).text
-    time.sleep(65)
-    new_money = driver.find_element_by_xpath(money_xpath).text
+
+    try:
+        current_money = driver.find_element_by_xpath(money_xpath).text.replace(',', '')
+        time.sleep(600)
+        new_money = driver.find_element_by_xpath(money_xpath).text.replace(',', '')
+    # summary_money.append(float(new_money))
+    except common.exceptions.NoSuchElementException:
+        print("Нету денег!")
+        time.sleep(2)
+        driver.close()
+        subprocess.call(
+            ['python3.5', '/mnt/3EA24E96A24E5297/Python/TMbot/v0.2/TMbot.py'])
+    print("Всего заработано : {}".format(new_money))
+
     if new_money <= current_money:
         driver.close()
         subprocess.call(['python3.5', '/mnt/3EA24E96A24E5297/Python/TMbot/v0.2/TMbot.py'])
