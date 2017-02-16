@@ -51,3 +51,32 @@ class TwitchMaster:
             driver.find_element_by_xpath(
                 if_no_promo_first_stream_xpath).click()
         time.sleep(5)
+        # ____ Вытягиваем кол-во бабла у стримера ____
+
+        # Xpath для баблишка
+        money_xpath = "/html/body/div[@class='wrapper']/div[@class='container']/div[@class='content-left']/div[@class='block'][2]/div[@class='time-is-money']/div[@class='money f-right']/div[@class='center bc-cont']/div[@id='credits-earned']"
+
+        def moneychecker():
+            try:
+                current_money = driver.find_element_by_xpath(
+                    money_xpath).text.replace(',', '')
+                print('Starting farm...bot1')
+                time.sleep(600)
+                new_money = driver.find_element_by_xpath(
+                    money_xpath).text.replace(',', '')
+            # summary_money.append(float(new_money))
+            except common.exceptions.NoSuchElementException:
+                print("Нету денег!")
+                time.sleep(2)
+                driver.close()
+                subprocess.call(
+                    ['python3.5',
+                     '/mnt/3EA24E96A24E5297/Python/TMbot/v0.2/TMbot.py'])
+            print("Всего заработано : {}".format(new_money))
+
+            if new_money <= current_money:
+                driver.close()
+                self.bot1(self)
+            else:
+                moneychecker()
+        moneychecker()
