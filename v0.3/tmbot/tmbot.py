@@ -41,42 +41,104 @@ class TwitchMaster:
     def bot1(self):
         self.login()
         # Xpath для первого стрима
-        first_stream_xpath = "/html/body/div[@class='wrapper']/div[@class='container'][2]/div[@class='content-left']/div[@class='block'][1]/div[@class='streams-list']/div[@class='item vip super-vip']/div[@class='inner']/div[@class='status']/a"
-        if_no_promo_first_stream_xpath = "/html/body/div[@class='wrapper']/div[@class='container'][2]/div[@class='content-left']/div[@class='block'][1]/div[@class='streams-list']/div[@class='item vip '][1]/div[@class='inner']/div[@class='status']/a"
-        # Переходим на первый стрим
-        try:
-            driver.find_element_by_xpath(first_stream_xpath).click()
-        except common.exceptions.WebDriverException:
-            print("Нету промо канала, перехожу на запаску!")
-            driver.find_element_by_xpath(
-                if_no_promo_first_stream_xpath).click()
+        first_stream_xpath = "/html/body/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div/div[1]/a[2]/img"
+        driver.find_element_by_xpath(first_stream_xpath).click()
         time.sleep(5)
         # ____ Вытягиваем кол-во бабла у стримера ____
+        self.money_checker1()
 
-        # Xpath для баблишка
-        money_xpath = "/html/body/div[@class='wrapper']/div[@class='container']/div[@class='content-left']/div[@class='block'][2]/div[@class='time-is-money']/div[@class='money f-right']/div[@class='center bc-cont']/div[@id='credits-earned']"
-
-        def moneychecker():
-            try:
-                current_money = driver.find_element_by_xpath(
-                    money_xpath).text.replace(',', '')
-                print('Starting farm...bot1')
-                time.sleep(600)
-                new_money = driver.find_element_by_xpath(
-                    money_xpath).text.replace(',', '')
+    def money_checker1(self):
+        try:
+            # Xpath для баблишка
+            money_xpath = "//*[@id='credits-earned']"
+            current_money = driver.find_element_by_xpath(money_xpath).text.replace(',', '')
+            print('Bot 1 - Current money: {}'.format(current_money))
+            time.sleep(150)
+            new_money = driver.find_element_by_xpath(
+                money_xpath).text.replace(',', '')
             # summary_money.append(float(new_money))
-            except common.exceptions.NoSuchElementException:
-                print("Нету денег!")
-                time.sleep(2)
-                driver.close()
-                subprocess.call(
-                    ['python3.5',
-                     '/mnt/3EA24E96A24E5297/Python/TMbot/v0.2/TMbot.py'])
+        except common.exceptions.NoSuchElementException:
+            print("Нету денег!")
             print("Всего заработано : {}".format(new_money))
+            time.sleep(2)
+            driver.close()
+            self.bot1()
 
-            if new_money <= current_money:
-                driver.close()
-                self.bot1(self)
-            else:
-                moneychecker()
-        moneychecker()
+        if new_money <= current_money:
+            driver.close()
+            self.bot1()
+        else:
+            self.money_checker1()
+
+
+    def bot2(self):
+        self.login()
+        # Xpath для второго стрима
+        second_stream_xpath = "/html/body/div[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div/div[1]/a[2]/img"
+        # Переходим на второй стрим
+        driver.find_element_by_xpath(second_stream_xpath).click()
+        time.sleep(5)
+        # ____ Вытягиваем кол-во бабла у стримера ____
+        self.money_checker2()
+
+    def money_checker2(self):
+        try:
+            # Xpath для баблишка
+            money_xpath = "//*[@id='credits-earned']"
+            current_money = driver.find_element_by_xpath(money_xpath).text.replace(',', '')
+            print('Bot 2 - Current money: {}'.format(current_money))
+            time.sleep(150)
+            new_money = driver.find_element_by_xpath(
+                money_xpath).text.replace(',', '')
+            # summary_money.append(float(new_money))
+        except common.exceptions.NoSuchElementException:
+            print("Нету денег!")
+            print("Всего заработано : {}".format(new_money))
+            time.sleep(2)
+            driver.close()
+            self.bot2()
+
+        if new_money <= current_money:
+            driver.close()
+            self.bot2()
+        else:
+            self.money_checker2()
+
+    def bot3(self):
+        self.login()
+        # Xpath для первого стрима
+        third_stream_xpath = "/html/body/div[1]/div[3]/div[1]/div[1]/div[1]/div[3]/div/div[2]/a"
+        # Переходим на третий стрим
+        driver.find_element_by_xpath(third_stream_xpath).click()
+        time.sleep(5)
+        # ____ Вытягиваем кол-во бабла у стримера ____
+        self.money_checker3()
+
+    def money_checker3(self):
+        try:
+            # Xpath для баблишка
+            money_xpath = "//*[@id='credits-earned']"
+            current_money = driver.find_element_by_xpath(money_xpath).text.replace(',', '')
+            print('Bot 3 - Current money: {}'.format(current_money))
+            time.sleep(150)
+            new_money = driver.find_element_by_xpath(
+                money_xpath).text.replace(',', '')
+            # summary_money.append(float(new_money))
+        except common.exceptions.NoSuchElementException:
+            print("Нету денег!")
+            print("Всего заработано : {}".format(new_money))
+            time.sleep(2)
+            driver.close()
+            self.bot3()
+
+        if new_money <= current_money:
+            driver.close()
+            self.bot3()
+        else:
+            self.money_checker3()
+
+
+
+
+
+# TODO Переписать все xpath
